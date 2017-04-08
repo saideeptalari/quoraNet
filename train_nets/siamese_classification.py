@@ -80,10 +80,13 @@ class SiameseClassificationNet(object):
         with tf.Session() as sess:
             init_op = tf.global_variables_initializer()
             sess.run(init_op)
+
             if retrain:
                 saver.restore(sess, save_path=save_path)
+
             if n_samples is None:
                 n_samples = len(targets)
+
             split = int(split_percent * n_samples)
             n_batches = split / batch_size
 

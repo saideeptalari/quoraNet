@@ -51,6 +51,7 @@ class SiameseNet(object):
             question1 = self.model(ques_1, dropout_keep, batch_size=batch_size)
             scope.reuse_variables()
             question2 = self.model(ques_2, dropout_keep, batch_size=batch_size)
+
         saver = tf.train.Saver()
         distances = self.euclidean_distance(question1, question2)
         loss = self.contrastive_loss(distances, Y)
@@ -61,10 +62,13 @@ class SiameseNet(object):
         with tf.Session() as sess:
             init_op = tf.global_variables_initializer()
             sess.run(init_op)
+
             if retrain:
                 saver.restore(sess, save_path=save_path)
+
             if n_samples is None:
                 n_samples = len(targets)
+
             split = int(split_percent * n_samples)
             n_batches = split / batch_size
 
