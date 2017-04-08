@@ -1,0 +1,2 @@
+from doc_vectors import Doc2VecLoader
+from word_vectors import Word2VecLoader
